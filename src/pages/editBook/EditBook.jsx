@@ -35,7 +35,7 @@ const EditBook = () => {
     formData.append("image", image);
 
     const response = await axios.patch(
-      "http://localhost:3000/book/" + id,
+      "https://mern2-0-basicnode-8atg.onrender.com/book/" + id,
       formData
     );
     if (response.status === 200) {
@@ -46,7 +46,9 @@ const EditBook = () => {
   };
 
   const fetchBook = async () => {
-    const response = await axios.get("http://localhost:3000/book/" + id);
+    const response = await axios.get(
+      "https://mern2-0-basicnode-8atg.onrender.com//book/" + id
+    );
     if (response.status === 200) {
       setData(response.data.data);
     }
