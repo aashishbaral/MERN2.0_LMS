@@ -59,7 +59,7 @@ const EditBook = () => {
       formData.append("image", image);
 
       const response = await axios.patch(
-        "https://mern-2-0-lms-react-weld.vercel.app/book/" + id,
+        "https://mern2-0-basicnode-8atg.onrender.com/book/" + id,
         formData
       );
       if (response.status === 200) {
@@ -72,7 +72,7 @@ const EditBook = () => {
 
   const fetchBook = async () => {
     const response = await axios.get(
-      "https://mern-2-0-lms-react-weld.vercel.app/book/" + id
+      "https://mern2-0-basicnode-8atg.onrender.com/book/" + id
     );
     if (response.status === 200) {
       setData(response.data.data);

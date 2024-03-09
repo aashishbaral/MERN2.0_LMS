@@ -7,7 +7,7 @@ const Home = () => {
   const [books, setBooks] = useState([]);
   const fetchBooks = async () => {
     const response = await axios.get(
-      "https://mern-2-0-lms-react-weld.vercel.app/book"
+      "https://mern2-0-basicnode-8atg.onrender.com//book"
     );
 
     if (response.status === 200) {

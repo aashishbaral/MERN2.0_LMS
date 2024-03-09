@@ -92,7 +92,7 @@ const AddBook = () => {
       formData.append("image", image);
 
       const response = await axios.post(
-        "https://mern-2-0-lms-react-weld.vercel.app/book",
+        "https://mern2-0-basicnode-8atg.onrender.com/book",
         formData
       );
       if (response.status === 201) {

@@ -9,7 +9,7 @@ const SingleBook = () => {
   const [book, setBook] = useState({});
   const fetchBook = async () => {
     const response = await axios.get(
-      `https://mern-2-0-lms-react-weld.vercel.app/${id}`
+      `https://mern2-0-basicnode-8atg.onrender.com/book/${id}`
     );
     if (response.status === 200) {
       setBook(response.data.data);
@@ -22,7 +22,7 @@ const SingleBook = () => {
 
   const handleClick = async () => {
     const response = await axios.delete(
-      `https://mern-2-0-lms-react-weld.vercel.app/${id}`
+      `https://mern2-0-basicnode-8atg.onrender.com/book/${id}`
     );
     if (response.status === 200) {
       navigate("/");
