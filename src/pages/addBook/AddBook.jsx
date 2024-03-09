@@ -51,6 +51,8 @@ const AddBook = () => {
     publishedAt: "",
     publication: "",
   });
+  const [error, setError] = useState("");
+  const [validate, setValidate] = useState(true);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -60,19 +62,44 @@ const AddBook = () => {
     });
   };
 
+  const handleImage = (e) => {
+    const file = e.target.files[0];
+    // console.log(file);
+
+    const allowedFileTypes = ["image/png", "image/jpeg", "image/jpg"];
+    const limitSize = 1000000; // 1 MB
+
+    if (!allowedFileTypes.includes(file.type)) {
+      setError("Only image file is accepted.");
+      setValidate(false);
+    } else if (file.size > limitSize) {
+      setError("File size cannot be more than 1 MB");
+      setValidate(false);
+    } else {
+      setImage(file);
+      setValidate(true);
+      setError("");
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
     Object.entries(data).forEach(([key, value]) => {
       formData.append(key, value);
     });
-    formData.append("image", image);
+    if (validate) {
+      formData.append("image", image);
 
-    const response = await axios.post("http://localhost:3000/book", formData);
-    if (response.status === 201) {
-      navigate("/");
-    } else {
-      alert("Some thing went wrong");
+      const response = await axios.post(
+        "https://mern-2-0-lms-react-weld.vercel.app/book",
+        formData
+      );
+      if (response.status === 201) {
+        navigate("/");
+      } else {
+        alert("Some thing went wrong");
+      }
     }
   };
 
@@ -185,9 +212,10 @@ const AddBook = () => {
               type="file"
               id="bookImage"
               name="image"
-              onChange={(e) => setImage(e.target.files[0])}
+              onChange={handleImage}
               className="mt-1 p-2 w-full border rounded-md text-gray-800"
             />
+            <span className="text-red-400">{error}</span>
           </div>
           <button
             type="submit"

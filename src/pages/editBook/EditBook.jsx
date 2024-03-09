@@ -59,7 +59,7 @@ const EditBook = () => {
       formData.append("image", image);
 
       const response = await axios.patch(
-        "http://localhost:3000/book/" + id,
+        "https://mern-2-0-lms-react-weld.vercel.app/book/" + id,
         formData
       );
       if (response.status === 200) {
@@ -71,7 +71,9 @@ const EditBook = () => {
   };
 
   const fetchBook = async () => {
-    const response = await axios.get("http://localhost:3000/book/" + id);
+    const response = await axios.get(
+      "https://mern-2-0-lms-react-weld.vercel.app/book/" + id
+    );
     if (response.status === 200) {
       setData(response.data.data);
     }
