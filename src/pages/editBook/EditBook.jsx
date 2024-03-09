@@ -59,11 +59,10 @@ const EditBook = () => {
       formData.append("image", image);
 
       const response = await axios.patch(
-        "https://mern2-0-basicnode-8atg.onrender.com/book/" + id,
+        "http://localhost:3000/book/" + id,
         formData
       );
 
-      // https://mern2-0-basicnode-8atg.onrender.com/
       if (response.status === 200) {
         navigate("/SingleBook/" + id);
       } else {
@@ -73,9 +72,7 @@ const EditBook = () => {
   };
 
   const fetchBook = async () => {
-    const response = await axios.get(
-      "https://mern2-0-basicnode-8atg.onrender.com/book/" + id
-    );
+    const response = await axios.get("http://localhost:3000/book/" + id);
     if (response.status === 200) {
       setData(response.data.data);
     }

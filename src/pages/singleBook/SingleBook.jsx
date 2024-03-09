@@ -8,9 +8,7 @@ const SingleBook = () => {
   const navigate = useNavigate();
   const [book, setBook] = useState({});
   const fetchBook = async () => {
-    const response = await axios.get(
-      `https://mern2-0-basicnode-8atg.onrender.com/book/${id}`
-    );
+    const response = await axios.get(`http://localhost:3000/book/${id}`);
     if (response.status === 200) {
       setBook(response.data.data);
     }
@@ -21,9 +19,7 @@ const SingleBook = () => {
   }, []);
 
   const handleClick = async () => {
-    const response = await axios.delete(
-      `https://mern2-0-basicnode-8atg.onrender.com/book/${id}`
-    );
+    const response = await axios.delete(`http://localhost:3000/book/${id}`);
     if (response.status === 200) {
       navigate("/");
       console.log(response.data.message);
