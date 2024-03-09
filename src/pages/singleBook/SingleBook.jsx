@@ -1,15 +1,14 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import NavBar from "../../components/NavBar";
 
 const SingleBook = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [book, setBook] = useState({});
   const fetchBook = async () => {
-    const response = await axios.get(
-      `https://mern2-0-basicnode-8atg.onrender.com/book/${id}`
-    );
+    const response = await axios.get(`http://localhost:3000/book/${id}`);
     if (response.status === 200) {
       setBook(response.data.data);
     }

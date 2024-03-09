@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import NavBar from "../../components/NavBar";
 
@@ -17,6 +17,8 @@ const EditBook = () => {
   });
 
   const [image, setImage] = useState(null);
+  const [error, setError] = useState("");
+  const [validate, setValidate] = useState(true);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -26,35 +28,58 @@ const EditBook = () => {
     });
   };
 
+  const handleImage = (e) => {
+    const file = e.target.files[0];
+    // console.log(file);
+
+    const allowedFileTypes = ["image/png", "image/jpeg", "image/jpg"];
+    const limitSize = 1000000; // 1 MB
+
+    if (!allowedFileTypes.includes(file.type)) {
+      setError("Only image file is accepted.");
+      setValidate(false);
+    } else if (file.size > limitSize) {
+      setError("File size cannot be more than 1 MB");
+      setValidate(false);
+    } else {
+      setImage(file);
+      setValidate(true);
+      setError("");
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
     Object.entries(data).forEach(([key, value]) => {
       formData.append(key, value);
     });
-    formData.append("image", image);
 
-    const response = await axios.patch(
-      "https://mern2-0-basicnode-8atg.onrender.com/book/" + id,
-      formData
-    );
-    if (response.status === 200) {
-      navigate("/SingleBook/" + id);
-    } else {
-      alert("Something went wrong");
+    if (validate) {
+      formData.append("image", image);
+
+      const response = await axios.patch(
+        "http://localhost:3000/book/" + id,
+        formData
+      );
+      if (response.status === 200) {
+        navigate("/SingleBook/" + id);
+      } else {
+        alert("Something went wrong");
+      }
     }
   };
 
   const fetchBook = async () => {
-    const response = await axios.get(
-      "https://mern2-0-basicnode-8atg.onrender.com//book/" + id
-    );
+    const response = await axios.get("http://localhost:3000/book/" + id);
     if (response.status === 200) {
       setData(response.data.data);
     }
   };
 
-  fetchBook();
+  useEffect(() => {
+    fetchBook();
+  }, []);
 
   return (
     <>
@@ -169,9 +194,10 @@ const EditBook = () => {
               type="file"
               id="bookImage"
               name="image"
-              onChange={(e) => setImage(e.target.files[0])}
+              onChange={handleImage}
               className="mt-1 p-2 w-full border rounded-md text-gray-800"
             />
+            <span className="text-red-400">{error}</span>
           </div>
           <button
             type="submit"
