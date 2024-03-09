@@ -17,8 +17,8 @@ const SingleBook = () => {
   };
 
   useEffect(() => {
-    fetchBook(), [];
-  });
+    fetchBook();
+  }, []);
 
   const handleClick = async () => {
     const response = await axios.delete(
